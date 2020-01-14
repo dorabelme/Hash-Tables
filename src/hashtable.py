@@ -103,15 +103,25 @@ class HashTable:
 
         return None
 
-    def resize(self):
+    def resize(self, factor=2):
         '''
         Doubles the capacity of the hash table and
         rehash all key/value pairs.
 
         Fill this in.
         '''
-        for i in range(self.capacity):
-            self.storage.append(None)
+        # for i in range(self.capacity):
+        #     self.storage.append(None)
+
+        self.capacity = int(self.capacity * factor)
+        temp_hashtable = HashTable(self.capacity)
+
+        for node in self.storage:
+            while node:
+                temp_hashtable.insert(node.key, node.value)
+                node = node.next
+
+        self.storage = temp_hashtable.storage
 
 
 if __name__ == "__main__":
